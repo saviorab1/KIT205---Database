@@ -12,6 +12,8 @@ KIT205 - Database Assignment*/
 void test_load();
 void test_check_word();
 void test_unload();
+void test_size();
+void run_tests();
 
 // Function to check if a file exists
 bool file_exists(const char* path) {
@@ -28,6 +30,7 @@ void run_tests() {
     test_load();
     test_check_word();
     test_unload();
+    test_size();
 }
 
 // Test function for loading the dictionary
@@ -103,6 +106,29 @@ void test_unload() {
         printf("test_unload failed\n");
     }
     printf("Time taken for test_unload: %f seconds\n", time_taken);
+}
+
+// Test function for checking the size of the dictionary
+void test_size() {
+    load("words.txt"); // Load dictionary
+
+    clock_t start_time, end_time;
+    double time_taken;
+
+    start_time = clock();
+    unsigned int dictionary_size = size(); // Get dictionary size
+    end_time = clock();
+    time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+
+    if (dictionary_size == 1000) { // Adjust the expected size as needed
+        printf("test_size passed\n");
+    }
+    else {
+        printf("test_size failed\n");
+    }
+    printf("Time taken for test_size: %f seconds\n", time_taken);
+
+    unload(); // Unload dictionary
 }
 
 int main() {
