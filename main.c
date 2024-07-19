@@ -8,6 +8,9 @@ KIT205 - Database Assignment*/
 #include <time.h>
 #include "dictionary.h"
 
+// Function prototypes for tests
+void test_load();
+
 // Function to check if a file exists
 bool file_exists(const char* path) {
     FILE* file = fopen(path, "r");
