@@ -10,6 +10,7 @@ KIT205 - Database Assignment*/
 
 // Function prototypes for tests
 void test_load();
+void test_check_word();
 
 // Function to check if a file exists
 bool file_exists(const char* path) {
@@ -24,6 +25,7 @@ bool file_exists(const char* path) {
 // Function to run all tests
 void run_tests() {
     test_load();
+    test_check_word();
 }
 
 // Test function for loading the dictionary
@@ -43,6 +45,40 @@ void test_load() {
         printf("test_load failed\n");
     }
     printf("Time taken for test_load: %f seconds\n", time_taken);
+    unload(); // Unload dictionary
+}
+
+// Test function for checking words in the dictionary
+void test_check_word() {
+    load("words.txt"); // Load dictionary
+
+    clock_t start_time, end_time;
+    double time_taken;
+
+    start_time = clock();
+    bool result = check("hello"); // Check existing word
+    end_time = clock();
+    time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+    if (result) {
+        printf("test_check_word (existing word) passed\n");
+    }
+    else {
+        printf("test_check_word (existing word) failed\n");
+    }
+    printf("Time taken for test_check_word (existing word): %f seconds\n", time_taken);
+
+    start_time = clock();
+    result = check("zzzzzzzz"); // Check non-existing word
+    end_time = clock();
+    time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+    if (!result) {
+        printf("test_check_word (non-existing word) passed\n");
+    }
+    else {
+        printf("test_check_word (non-existing word) failed\n");
+    }
+    printf("Time taken for test_check_word (non-existing word): %f seconds\n", time_taken);
+
     unload(); // Unload dictionary
 }
 
