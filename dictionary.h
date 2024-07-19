@@ -23,5 +23,6 @@ extern unsigned int dictionary_size;  // Counter for the number of words in the 
 
 // Function prototypes
 unsigned int hash(const char* word);
+bool load(const char* dictionary);
 
 #endif // DICTIONARY_H

@@ -20,3 +20,33 @@ unsigned int hash(const char* word) {
 
     return hash % TABLE_SIZE;
 }
+
+// Load function to read words from a file and store them in the hash table
+bool load(const char* dictionary) {
+    // Open the dictionary file for reading
+    FILE* file = fopen(dictionary, "r");
+    if (!file) {
+        perror("Error opening dictionary file");
+        return false;
+    }
+
+    char word[LENGTH + 1];
+    // Read each word from the file
+    while (fscanf_s(file, "%45s", word, (unsigned)_countof(word)) != EOF) {
+        node* new_node = malloc(sizeof(node));
+        if (!new_node) {
+            fclose(file);
+            perror("Error allocating memory for new node");
+            return false;
+        }
+        strcpy_s(new_node->word, sizeof(new_node->word), word);
+        unsigned int index = hash(word);
+        // Insert the node at the beginning of the linked list for the hash index
+        new_node->next = table[index];
+        table[index] = new_node;
+        dictionary_size++;
+    }
+
+    fclose(file);
+    return true;
+}
