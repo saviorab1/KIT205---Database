@@ -25,6 +25,6 @@ extern unsigned int dictionary_size;  // Counter for the number of words in the 
 unsigned int hash(const char* word);
 bool load(const char* dictionary);
 bool check(const char* word);
-
+bool unload(void);
 
 #endif // DICTIONARY_H

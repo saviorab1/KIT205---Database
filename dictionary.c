@@ -65,3 +65,20 @@ bool check(const char* word) {
     }
     return false;
 }
+
+// Unload function to free memory allocated for the hash table
+bool unload(void) {
+    // Iterate over each linked list in the hash table
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        node* cursor = table[i];
+        // Traverse the linked list and free each node
+        while (cursor != NULL) {
+            node* temp = cursor;
+            cursor = cursor->next;
+            free(temp);
+        }
+        // Set the hash table entry to NULL
+        table[i] = NULL;
+    }
+    return true;
+}
