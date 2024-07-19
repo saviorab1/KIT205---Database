@@ -50,3 +50,18 @@ bool load(const char* dictionary) {
     fclose(file);
     return true;
 }
+
+// Check function to verify if a word is in the hash table
+bool check(const char* word) {
+    unsigned int index = hash(word);
+    // Traverse the linked list at the hash index
+    node* cursor = table[index];
+    while (cursor != NULL) {
+        // Compare the word with the current node's word
+        if (strcmp(cursor->word, word) == 0) {
+            return true;
+        }
+        cursor = cursor->next;
+    }
+    return false;
+}
