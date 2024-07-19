@@ -26,5 +26,6 @@ unsigned int hash(const char* word);
 bool load(const char* dictionary);
 bool check(const char* word);
 bool unload(void);
+unsigned int size(void); 
 
 #endif // DICTIONARY_H

@@ -82,3 +82,8 @@ bool unload(void) {
     }
     return true;
 }
+
+// Size function to return the number of words in the dictionary
+unsigned int size(void) {
+    return dictionary_size;
+}
