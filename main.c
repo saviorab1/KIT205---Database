@@ -1,2 +1,73 @@
 /* @author LE HOANG ANH DINH
 KIT205 - Database Assignment*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <time.h>
+#include "dictionary.h"
+
+int main() {
+    const char* dictionary_path = "words.txt";
+    const char* text_path = "test.txt";
+
+    printf("Dictionary file path: %s\n", dictionary_path);
+    printf("Text file path: %s\n", text_path);
+
+    if (!file_exists(dictionary_path)) {
+        printf("Dictionary file not found: %s\n", dictionary_path);
+        return 1;
+    }
+
+    if (!file_exists(text_path)) {
+        printf("Text file not found: %s\n", text_path);
+        return 1;
+    }
+
+    run_tests();
+
+    clock_t start_time, end_time;
+    double time_taken;
+
+    start_time = clock();
+    bool success = load(dictionary_path);
+    end_time = clock();
+    time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+    printf("Time taken to load dictionary: %f seconds\n", time_taken);
+
+    if (!success) {
+        printf("Failed to load dictionary.\n");
+        return 1;
+    }
+
+    start_time = clock();
+    FILE* file = fopen(text_path, "r");
+    if (file == NULL) {
+        perror("Could not open file");
+        return 1;
+    }
+
+    char word[LENGTH + 1];
+    while (fscanf_s(file, "%45s", word, (unsigned)_countof(word)) != EOF) {
+        if (check(word)) {
+            printf("%s is correct.\n", word);
+        }
+        else {
+            printf("%s is misspelled.\n", word);
+        }
+    }
+    end_time = clock();
+    time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+    printf("Time taken to check words: %f seconds\n", time_taken);
+
+    fclose(file);
+
+    start_time = clock();
+    unload();
+    end_time = clock();
+    time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+    printf("Time taken to unload dictionary: %f seconds\n", time_taken);
+
+    return 0;
+}
