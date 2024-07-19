@@ -18,6 +18,30 @@ bool file_exists(const char* path) {
     return false;
 }
 
+// Function to run all tests
+void run_tests() {
+    test_load();
+}
+
+// Test function for loading the dictionary
+void test_load() {
+    clock_t start_time, end_time;
+    double time_taken;
+
+    start_time = clock();
+    bool result = load("words.txt"); // Attempt to load dictionary
+    end_time = clock();
+    time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+
+    if (result) {
+        printf("test_load passed\n");
+    }
+    else {
+        printf("test_load failed\n");
+    }
+    printf("Time taken for test_load: %f seconds\n", time_taken);
+    unload(); // Unload dictionary
+}
 
 int main() {
     const char* dictionary_path = "words.txt";
@@ -31,13 +55,6 @@ int main() {
         return 1;
     }
 
-    if (!file_exists(text_path)) {
-        printf("Text file not found: %s\n", text_path);
-        return 1;
-    }
-
-    run_tests();
-
     clock_t start_time, end_time;
     double time_taken;
 
@@ -49,6 +66,11 @@ int main() {
 
     if (!success) {
         printf("Failed to load dictionary.\n");
+        return 1;
+    }
+
+    if (!file_exists(text_path)) {
+        printf("Text file not found: %s\n", text_path);
         return 1;
     }
 
@@ -80,5 +102,6 @@ int main() {
     time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
     printf("Time taken to unload dictionary: %f seconds\n", time_taken);
 
+    run_tests();
     return 0;
 }
