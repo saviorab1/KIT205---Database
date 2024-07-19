@@ -8,6 +8,17 @@ KIT205 - Database Assignment*/
 #include <time.h>
 #include "dictionary.h"
 
+// Function to check if a file exists
+bool file_exists(const char* path) {
+    FILE* file = fopen(path, "r");
+    if (file) {
+        fclose(file);
+        return true;
+    }
+    return false;
+}
+
+
 int main() {
     const char* dictionary_path = "words.txt";
     const char* text_path = "test.txt";
