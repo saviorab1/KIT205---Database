@@ -11,6 +11,7 @@ KIT205 - Database Assignment*/
 // Function prototypes for tests
 void test_load();
 void test_check_word();
+void test_unload();
 
 // Function to check if a file exists
 bool file_exists(const char* path) {
@@ -26,6 +27,7 @@ bool file_exists(const char* path) {
 void run_tests() {
     test_load();
     test_check_word();
+    test_unload();
 }
 
 // Test function for loading the dictionary
@@ -80,6 +82,27 @@ void test_check_word() {
     printf("Time taken for test_check_word (non-existing word): %f seconds\n", time_taken);
 
     unload(); // Unload dictionary
+}
+
+// Test function for unloading the dictionary
+void test_unload() {
+    load("words.txt"); // Load dictionary
+
+    clock_t start_time, end_time;
+    double time_taken;
+
+    start_time = clock();
+    bool result = unload(); // Unload dictionary
+    end_time = clock();
+    time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+
+    if (result) {
+        printf("test_unload passed\n");
+    }
+    else {
+        printf("test_unload failed\n");
+    }
+    printf("Time taken for test_unload: %f seconds\n", time_taken);
 }
 
 int main() {
